@@ -1,10 +1,11 @@
-function Being(species, weight, height, where, when, facts) {
+function Being(species, weight, height, where, when, facts, diet) {
   this.species = species;
   this.weight = weight;
   this.height = height;
   this.where = where;
   this.when = when;
   this.facts = facts;
+  this.diet = diet;
   this.image = `images/${species.toLowerCase()}.png`;
 }
 
@@ -22,8 +23,12 @@ class Dino extends Being {
     }
   }
 
-  compareWithHumanName() {
-    this.facts.push("Just call me " + this.species);
+  compareWithHumanDiet(human) {
+    if (this.diet === human.diet) {
+      this.facts.push("We have similar appetite");
+    } else {
+      this.facts.push("Let's not eat each other");
+    }
   }
 
   compareWithHumanWeight(human) {
@@ -51,8 +56,6 @@ function Human(name, weight, height) {
   Being.call(this, "human", weight, height);
   this.name = name;
 }
-Human.prototype = Object.create(Being.prototype);
-Human.prototype.constructor = Human;
 
 // Bird use factory pattern
 function createBird(species, weight, height, where, when, fact) {
@@ -126,7 +129,7 @@ document.getElementById("btn").addEventListener("click", function () {
 
     // insert human tile at center
     if (index === 3) {
-      const humanDiv = createGrid(human.species, human.image);
+      const humanDiv = createGrid(human.name, human.image);
       document.getElementById("grid").appendChild(humanDiv);
     }
   });
@@ -152,7 +155,7 @@ function createGrid(species, imageUrl, fact) {
   gridItemDiv.appendChild(image);
 
   // add fact
-  if (species !== "human") {
+  if (fact) {
     const factElem = document.createElement("p");
     factElem.innerText = fact;
     gridItemDiv.appendChild(factElem);
