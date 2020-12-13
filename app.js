@@ -52,8 +52,8 @@ class Dino extends Being {
 }
 
 // Human use constructor pattern
-function Human(name, weight, height) {
-  Being.call(this, "human", weight, height);
+function Human(name, weight, height, diet) {
+  Being.call(this, "human", weight, height, null, null, [], diet);
   this.name = name;
 }
 
@@ -108,11 +108,11 @@ document.getElementById("btn").addEventListener("click", function () {
     const heightFeet = Number(document.getElementById("feet").value);
     const heightInches = Number(document.getElementById("inches").value);
     const weight = Number(document.getElementById("weight").value);
-    const diet = document.getElementById("diet").value;
-
+    const diet = document.getElementById("diet").value.toLowerCase();
     // 12 inch = 1 feet
     const height = heightFeet * 12 + heightInches;
     const human = new Human(name, weight, height, diet);
+    console.log(human);
     return human;
   })();
 
